@@ -10,14 +10,8 @@ class GrowingTree extends Matrix {
     let matrik = this.Matrix;
     let list = [];
 
-    let i = this.randomInt(this.min, this.max);
-    let j = this.randomInt(this.min, this.max);
-    while (i % 2 == 0) {
-      i = this.randomInt(this.min, this.max);
-    }
-    while (j % 2 == 0) {
-      j = this.randomInt(this.min, this.max);
-    }
+    let i = this.randomOdd(this.min, this.max);
+    let j = this.randomOdd(this.min, this.max);
 
     let pos = {
       "i": i,

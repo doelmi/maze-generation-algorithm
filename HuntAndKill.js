@@ -35,16 +35,11 @@ class HuntAndKill extends Matrix {
 
   get Maze() {
     let matrik = this.Matrix;
-    let i = this.randomInt(this.min, this.max);
-    let j = this.randomInt(this.min, this.max);
-    while (i % 2 == 0) {
-      i = this.randomInt(this.min, this.max);
-    }
-    while (j % 2 == 0) {
-      j = this.randomInt(this.min, this.max);
-    }
+    let i = this.randomOdd(this.min, this.max);
+    let j = this.randomOdd(this.min, this.max);
+
     matrik[i][j] = 2;
-    console.log("start = ", i, " ; end = ", j);
+    //console.log("start = ", i, " ; end = ", j);
 
     let kill = true;
     while (kill) {
@@ -98,7 +93,7 @@ class HuntAndKill extends Matrix {
           walk = false;
         }
 
-        console.log(acakTemp, acak, i, j);
+        // console.log(acakTemp, acak, i, j);
 
       }
 
@@ -110,7 +105,6 @@ class HuntAndKill extends Matrix {
       } else {
         kill = false;
       }
-
     }
     return matrik;
   }

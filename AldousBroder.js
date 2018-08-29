@@ -9,17 +9,8 @@ class AldousBroder extends Matrix {
     //0 = Ruang, 1 = Pagar, 2 = Ruang Dikunjungi
     let matrik = this.Matrix;
     let roomRemaining = this.countRoom - 1;
-    // let i = 5,
-    //   j = 7;
-    let i = this.randomInt(this.min, this.max);
-    let j = this.randomInt(this.min, this.max);
-
-    while (i % 2 == 0) {
-      i = this.randomInt(this.min, this.max);
-    }
-    while (j % 2 == 0) {
-      j = this.randomInt(this.min, this.max);
-    }
+    let i = this.randomOdd(this.min, this.max);
+    let j = this.randomOdd(this.min, this.max);
 
     matrik[i][j] = 2;
 
@@ -38,7 +29,6 @@ class AldousBroder extends Matrix {
             }
             i = i - 2;
           }
-
           break;
         case 2:
           if (j + 2 < this.max) {

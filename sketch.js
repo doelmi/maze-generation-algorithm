@@ -1,20 +1,25 @@
-let binaryTree;
-let aldousBroder;
-let huntAndKill;
-let growingTree;
+let mazeGeneration;
+let maze;
 let w;
 let h;
 let n = 10;
 let s, e;
 
 function preload() {
-  // binaryTree = new BinaryTree(n);
-  // aldousBroder = new AldousBroder(n);
-  // huntAndKill = new HuntAndKill(n);
+  // mazeGeneration = new BinaryTree(n);
+  // mazeGeneration = new AldousBroder(n);
+  // mazeGeneration = new HuntAndKill(n);
+  // mazeGeneration = new GrowingTree(n);
+
+  // for (var i = 1; i <= 100; i++) {
+  // console.log("------ ", i, " ------");
   s = millis();
-  growingTree = new GrowingTree(n);
-  maze = growingTree.Maze;
+  mazeGeneration = new AldousBroder(n);
+  maze = mazeGeneration.Maze;
   e = millis();
+  console.log(e - s);
+  console.log(mazeGeneration.numberOfIntersection(maze));
+  // }
 }
 
 function setup() {
@@ -22,8 +27,7 @@ function setup() {
 
   w = width / (n * 2 + 1);
   h = height / (n * 2 + 1);
-  console.log(maze);
-  console.log(e, s, e-s);
+  // console.log(maze);
 }
 
 function draw() {
@@ -38,4 +42,5 @@ function draw() {
       }
     }
   }
+  noLoop();
 }
