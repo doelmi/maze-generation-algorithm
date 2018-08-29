@@ -1,17 +1,19 @@
 let binaryTree;
 let aldousBroder;
 let huntAndKill;
+let growingTree;
 let w;
 let h;
 let n = 10;
 let s, e;
 
 function preload() {
-  binaryTree = new BinaryTree(n);
+  // binaryTree = new BinaryTree(n);
+  // aldousBroder = new AldousBroder(n);
+  // huntAndKill = new HuntAndKill(n);
   s = millis();
-  aldousBroder = new AldousBroder(n);
-  huntAndKill = new HuntAndKill(n);
-  maze = huntAndKill.Maze;
+  growingTree = new GrowingTree(n);
+  maze = growingTree.Maze;
   e = millis();
 }
 

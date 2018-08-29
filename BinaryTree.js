@@ -10,7 +10,7 @@ class BinaryTree extends Matrix {
     while (x < matrik.length) {
       y = 1;
       while (y < matrik[x].length) {
-        var acak = Math.floor((Math.random() * 2));
+        var acak = this.randomInt(0, 1);
         if (acak === 1) {
           if (y < matrik[x].length - 2) {
             matrik[x][y + 1] = 0;

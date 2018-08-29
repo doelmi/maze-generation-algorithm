@@ -35,13 +35,13 @@ class HuntAndKill extends Matrix {
 
   get Maze() {
     let matrik = this.Matrix;
-    let i = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
-    let j = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+    let i = this.randomInt(this.min, this.max);
+    let j = this.randomInt(this.min, this.max);
     while (i % 2 == 0) {
-      i = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+      i = this.randomInt(this.min, this.max);
     }
     while (j % 2 == 0) {
-      j = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+      j = this.randomInt(this.min, this.max);
     }
     matrik[i][j] = 2;
     console.log("start = ", i, " ; end = ", j);
@@ -53,7 +53,7 @@ class HuntAndKill extends Matrix {
       let walk = true;
       let acakTemp = [];
       while (walk) {
-        var acak = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+        var acak = this.randomInt(1, 4);
         //urutan tetangga 1atas - 2kanan - 3bawah - 4kiri
         if (!acakTemp.includes(acak)) {
           acakTemp.push(acak);
@@ -110,7 +110,7 @@ class HuntAndKill extends Matrix {
       } else {
         kill = false;
       }
-      
+
     }
     return matrik;
   }

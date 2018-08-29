@@ -11,20 +11,21 @@ class AldousBroder extends Matrix {
     let roomRemaining = this.countRoom - 1;
     // let i = 5,
     //   j = 7;
-    let i = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
-    let j = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+    let i = this.randomInt(this.min, this.max);
+    let j = this.randomInt(this.min, this.max);
+
     while (i % 2 == 0) {
-      i = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+      i = this.randomInt(this.min, this.max);
     }
     while (j % 2 == 0) {
-      j = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+      j = this.randomInt(this.min, this.max);
     }
 
     matrik[i][j] = 2;
 
     while (roomRemaining > 0) {
 
-      var acak = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+      var acak = this.randomInt(1, 4);;
       // console.log(roomRemaining, acak, i, j);
       //urutan tetangga 1atas - 2kanan - 3bawah - 4kiri
       switch (acak) {

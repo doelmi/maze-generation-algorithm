@@ -3,6 +3,11 @@ class Matrix {
     this.n = n;
     this.countRoom = Math.pow(n, 2);
   }
+
+  randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   get Matrix() {
     var matrik = [];
     for (var i = 0; i < this.n * 2 + 1; i++) {
@@ -20,7 +25,3 @@ class Matrix {
     return matrik;
   }
 }
-
-// function getRandomInt(min, max) {
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
