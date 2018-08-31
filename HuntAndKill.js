@@ -6,7 +6,7 @@ class HuntAndKill extends Matrix {
     this.min = 0;
   }
 
-  killProcess(matrik) {
+  huntProcess(matrik) {
     for (var i = 1; i < matrik.length; i += 2) {
       for (var j = 1; j < matrik[i].length; j += 2) {
         if (matrik[i][j] == 0) {
@@ -39,10 +39,9 @@ class HuntAndKill extends Matrix {
     let j = this.randomOdd(this.min, this.max);
 
     matrik[i][j] = 2;
-    //console.log("start = ", i, " ; end = ", j);
 
-    let kill = true;
-    while (kill) {
+    let hunt = true;
+    while (hunt) {
 
       //Proses Walk
       let walk = true;
@@ -93,17 +92,15 @@ class HuntAndKill extends Matrix {
           walk = false;
         }
 
-        // console.log(acakTemp, acak, i, j);
-
       }
 
-      // Proses Kill
-      let getKilled = this.killProcess(matrik);
-      if (getKilled != -1) {
-        i = getKilled[0];
-        j = getKilled[1];
+      // Proses Hunt
+      let getHunted = this.huntProcess(matrik);
+      if (getHunted != -1) {
+        i = getHunted[0];
+        j = getHunted[1];
       } else {
-        kill = false;
+        hunt = false;
       }
     }
     return matrik;

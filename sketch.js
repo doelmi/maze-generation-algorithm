@@ -10,14 +10,16 @@ function preload() {
   // mazeGeneration = new AldousBroder(n);
   // mazeGeneration = new HuntAndKill(n);
   // mazeGeneration = new GrowingTree(n);
+  // mazeGeneration = new Wilsons(n);
 
   // for (var i = 1; i <= 100; i++) {
   // console.log("------ ", i, " ------");
   s = millis();
-  mazeGeneration = new AldousBroder(n);
+  mazeGeneration = new GrowingTree(n);
   maze = mazeGeneration.Maze;
   e = millis();
   console.log(e - s);
+  console.log(mazeGeneration.name);
   console.log(mazeGeneration.numberOfIntersection(maze));
   // }
 }
