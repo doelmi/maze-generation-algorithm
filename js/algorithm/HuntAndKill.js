@@ -2,107 +2,53 @@ class HuntAndKill extends Matrix {
   constructor(n) {
     super(n);
     this.name = "Hunt and Kill";
-    this.max = n * 2;
-    this.min = 0;
   }
 
-  huntProcess(matrik) {
-    for (var i = 1; i < matrik.length; i += 2) {
-      for (var j = 1; j < matrik[i].length; j += 2) {
-        if (matrik[i][j] == 0) {
-          if (i - 2 > this.min && matrik[i - 2][j] == 2) {
-            matrik[i][j] = 2;
-            matrik[i - 1][j] = 2;
-            return [i, j];
-          } else if (j + 2 < this.max && matrik[i][j + 2] == 2) {
-            matrik[i][j] = 2;
-            matrik[i][j + 1] = 2;
-            return [i, j];
-          } else if (i + 2 < this.max && matrik[i + 2][j] == 2) {
-            matrik[i][j] = 2;
-            matrik[i + 1][j] = 2;
-            return [i, j];
-          } else if (j - 2 > this.min && matrik[i][j - 2] == 2) {
-            matrik[i][j] = 2;
-            matrik[i][j - 1] = 2;
-            return [i, j];
+  hunting(rooms) {
+    for (let cell of rooms) {
+      if (cell.status == 0) {
+        let neighborIndex = [...cell.neighborIndex];
+        while (neighborIndex.length > 0) {
+          let random = this.randomInt(0, neighborIndex.length - 1);
+          let indexNeighbor = cell.neighborIndex[random];
+          let neighbor = cell.neighbor[indexNeighbor];
+          neighborIndex.splice(random, 1);
+          if (neighbor.cell.status == 2) {
+            neighbor.side.status = 2;
+            cell.status = 2;
+            return cell;
           }
         }
       }
     }
-    return -1;
+    return null;
   }
 
   get Maze() {
-    let matrik = this.Matrix;
-    let i = this.randomOdd(this.min, this.max);
-    let j = this.randomOdd(this.min, this.max);
+    let arrayMaze = this.Matrix;
+    let rooms = this.cellOfRoom(arrayMaze);
+    let randomVisited = this.randomInt(0, rooms.length - 1);
+    let currentCell = rooms[randomVisited];
+    currentCell.status = 2;
 
-    matrik[i][j] = 2;
-
-    let hunt = true;
-    while (hunt) {
-
-      //Proses Walk
-      let walk = true;
-      let acakTemp = [];
-      while (walk) {
-        var acak = this.randomInt(1, 4);
-        //urutan tetangga 1atas - 2kanan - 3bawah - 4kiri
-        if (!acakTemp.includes(acak)) {
-          acakTemp.push(acak);
+    while (currentCell != null) {
+      if (currentCell.neighborIndex.length > 0) {
+        let random = this.randomInt(0, currentCell.neighborIndex.length - 1);
+        let neighborIndex = currentCell.neighborIndex[random];
+        let neighbor = currentCell.neighbor[neighborIndex];
+        currentCell.neighborIndex.splice(random, 1);
+        if (neighbor.cell.status != 2) {
+          neighbor.cell.status = 2;
+          neighbor.side.status = 2;
+          currentCell = neighbor.cell;
         }
-
-        switch (acak) {
-          case 1:
-            if (i - 2 > this.min && matrik[i - 2][j] != 2) {
-              matrik[i - 2][j] = 2;
-              matrik[i - 1][j] = 2;
-              i = i - 2;
-              acakTemp = [];
-            }
-            break;
-          case 2:
-            if (j + 2 < this.max && matrik[i][j + 2] != 2) {
-              matrik[i][j + 2] = 2;
-              matrik[i][j + 1] = 2;
-              j = j + 2;
-              acakTemp = [];
-            }
-            break;
-          case 3:
-            if (i + 2 < this.max && matrik[i + 2][j] != 2) {
-              matrik[i + 2][j] = 2;
-              matrik[i + 1][j] = 2;
-              i = i + 2;
-              acakTemp = [];
-            }
-            break;
-          case 4:
-            if (j - 2 > this.min && matrik[i][j - 2] != 2) {
-              matrik[i][j - 2] = 2;
-              matrik[i][j - 1] = 2;
-              j = j - 2;
-              acakTemp = [];
-            }
-            break;
-        }
-
-        if (acakTemp.length == 4) {
-          walk = false;
-        }
-
       }
-
-      // Proses Hunt
-      let getHunted = this.huntProcess(matrik);
-      if (getHunted != -1) {
-        i = getHunted[0];
-        j = getHunted[1];
-      } else {
-        hunt = false;
+      if (currentCell.neighborIndex.length == 0) {
+        let hunted = this.hunting(rooms);
+        currentCell = hunted;
       }
     }
-    return matrik;
+
+    return arrayMaze;
   }
 }

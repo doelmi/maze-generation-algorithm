@@ -1,4 +1,93 @@
-class Matrix {
+class Cell {
+  constructor(i, j, status) {
+    this.i = i;
+    this.j = j;
+    this.status = status;
+    this.neighborIndex = [];
+    this.neighbor = [];
+    this.choosedNeighbor = null;
+    this.checked = false;
+  }
+
+  show() {
+    if (this.status == 1) {
+      fill(0);
+      noStroke();
+      rect(this.i * w, this.j * h, w, h);
+    } else if (this.status == 2) {
+      fill(112, 164, 255);
+      noStroke();
+      rect(this.i * w, this.j * h, w, h);
+    } else {
+      if (this.choosedNeighbor != null) {
+        fill(255, 119, 119);
+        noStroke();
+        rect(this.i * w, this.j * h, w, h);
+      } else if (this.checked) {
+        fill(255, 163, 163);
+        noStroke();
+        rect(this.i * w, this.j * h, w, h);
+      } else {
+        fill(255);
+        noStroke();
+        rect(this.i * w, this.j * h, w, h);
+      }
+    }
+  }
+
+  higtlight() {
+    fill(255, 247, 30);
+    noStroke();
+    rect(this.i * w, this.j * h, w, h);
+  }
+
+  setColor(color) {
+    fill(color);
+    noStroke();
+    rect(this.i * w, this.j * h, w, h);
+  }
+
+  higtlightNeighbor() {
+    for (let i = 0; i < this.neighborIndex.length; i++) {
+      let indexNeighbor = this.neighborIndex[i];
+      if (this.neighbor[indexNeighbor].cell.status != 2) {
+        fill(181, 255, 194);
+        noStroke();
+        rect(this.neighbor[indexNeighbor].cell.i * w, this.neighbor[indexNeighbor].cell.j * h, w, h);
+      }
+    }
+  }
+
+  higtlightNeighborVisited() {
+    if (this.status == 0) {
+      for (let i = 0; i < this.neighborIndex.length; i++) {
+        let indexNeighbor = this.neighborIndex[i];
+        if (this.neighbor[indexNeighbor].cell.status == 2) {
+          fill(181, 255, 194);
+          noStroke();
+          rect(this.neighbor[indexNeighbor].cell.i * w, this.neighbor[indexNeighbor].cell.j * h, w, h);
+        }
+      }
+    }
+  }
+
+  deleteNeighborVisited() {
+    if (this.status == 2) {
+      for (var i = 0; i < this.neighborIndex.length; i++) {
+        let indexNeighbor = this.neighborIndex[i];
+        let neighbor = this.neighbor[indexNeighbor];
+        if (neighbor.cell.status == 2) {
+          delete this.neighborIndex[i];
+        }
+      }
+      this.neighborIndex = this.neighborIndex.filter(function(i) {
+        return true;
+      });
+    }
+  }
+}
+
+class Grid {
   constructor(n) {
     this.n = n;
     this.length = this.n * 2 + 1;
@@ -23,7 +112,7 @@ class Matrix {
     return (i * this.length + j);
   }
 
-  get Matrix() {
+  get grid() {
     var arrayMaze = [];
     for (var i = 0; i < this.length; i++) {
       for (var j = 0; j < this.length; j++) {
