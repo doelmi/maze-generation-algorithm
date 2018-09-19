@@ -4,30 +4,33 @@ class BinaryTree extends Matrix {
     this.name = "Binary Tree";
   }
   get Maze() {
-    let matrik = this.Matrix;
+    let arrayMaze = this.Matrix;
     var x = 1,
       y;
-    while (x < matrik.length) {
-      y = 1;
-      while (y < matrik[x].length) {
-        var acak = this.randomInt(0, 1);
-        if (acak === 1) {
-          if (y < matrik[x].length - 2) {
-            matrik[x][y + 1] = 0;
-          } else if (x < matrik.length - 2) {
-            matrik[x + 1][y] = 0;
+
+    for (var i = 1; i < this.length; i += 2) {
+      for (var j = 1; j < this.length; j += 2) {
+        let acak = this.randomInt(0, 1);
+        if (acak == 1) {
+          if (j < this.max - 1) {
+            let neighborIndex = this.positionToIndex(i, j + 1);
+            arrayMaze[neighborIndex].status = 0;
+          } else if (i < this.max - 1) {
+            let neighborIndex = this.positionToIndex(i + 1, j);
+            arrayMaze[neighborIndex].status = 0;
           }
-        } else if (acak === 0) {
-          if (x < matrik.length - 2) {
-            matrik[x + 1][y] = 0;
-          } else if (y < matrik[x].length - 2) {
-            matrik[x][y + 1] = 0;
+        } else {
+          if (i < this.max - 1) {
+            let neighborIndex = this.positionToIndex(i + 1, j);
+            arrayMaze[neighborIndex].status = 0;
+          } else if (j < this.max - 1) {
+            let neighborIndex = this.positionToIndex(i, j + 1);
+            arrayMaze[neighborIndex].status = 0;
           }
         }
-        y += 2;
       }
-      x += 2;
+
     }
-    return matrik;
+    return arrayMaze;
   }
 }

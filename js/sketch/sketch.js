@@ -4,6 +4,7 @@ let w;
 let h;
 let n = 10;
 let s, e;
+let theMaze;
 
 function preload() {
   // mazeGeneration = new BinaryTree(n);
@@ -14,10 +15,11 @@ function preload() {
 
   // for (var i = 1; i <= 100; i++) {
   // console.log("------ ", i, " ------");
+  mazeGeneration = new HuntAndKill(n);
   s = millis();
-  mazeGeneration = new GrowingTree(n);
-  maze = mazeGeneration.Maze;
+  theMaze = mazeGeneration.Maze;
   e = millis();
+  maze = mazeGeneration.arrayMazeToMatrix(theMaze);
   console.log(e - s);
   console.log(mazeGeneration.name);
   console.log(mazeGeneration.numberOfIntersection(maze));

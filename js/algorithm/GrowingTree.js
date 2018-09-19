@@ -2,105 +2,32 @@ class GrowingTree extends Matrix {
   constructor(n) {
     super(n);
     this.name = "Growing Tree (Recursive Backtracker)";
-    this.max = n * 2;
-    this.min = 0;
   }
 
   get Maze() {
-    let matrik = this.Matrix;
+    let arrayMaze = this.Matrix;
     let list = [];
-
-    let i = this.randomOdd(this.min, this.max);
-    let j = this.randomOdd(this.min, this.max);
-
-    let pos = {
-      "i": i,
-      "j": j
-    };
-
-    list.push(pos);
-    matrik[i][j] = 2;
-
-    let acakTemp = [];
+    let index = this.positionToIndex(this.randomOdd(this.min, this.max), this.randomOdd(this.min, this.max));
+    let cell = arrayMaze[index];
+    list.push(cell);
+    cell.status = 2;
     while (list.length > 0) {
-
-      var acak = this.randomInt(1, 4);
-
-      if (!acakTemp.includes(acak)) {
-        acakTemp.push(acak);
+      if (cell.neighborIndex.length > 0) {
+        let acak = this.randomInt(0, cell.neighborIndex.length - 1);
+        let indexNeighbor = cell.neighborIndex[acak];
+        let neighbor = cell.neighbor[indexNeighbor];
+        cell.neighborIndex.splice(acak, 1);
+        if (neighbor.cell.status != 2) {
+          neighbor.cell.status = 2;
+          neighbor.side.status = 2;
+          list.push(neighbor.cell);
+          cell = neighbor.cell;
+        }
       }
-
-      switch (acak) {
-        case 1:
-          if (i - 2 > this.min && matrik[i - 2][j] != 2) {
-            matrik[i - 2][j] = 2;
-            matrik[i - 1][j] = 2;
-            i = i - 2;
-
-            acakTemp = [];
-
-            let nextPos = {
-              "i": i,
-              "j": j
-            };
-            list.push(nextPos);
-          }
-          break;
-        case 2:
-          if (j + 2 < this.max && matrik[i][j + 2] != 2) {
-            matrik[i][j + 2] = 2;
-            matrik[i][j + 1] = 2;
-            j = j + 2;
-
-            acakTemp = [];
-
-            let nextPos = {
-              "i": i,
-              "j": j
-            };
-            list.push(nextPos);
-          }
-          break;
-        case 3:
-          if (i + 2 < this.max && matrik[i + 2][j] != 2) {
-            matrik[i + 2][j] = 2;
-            matrik[i + 1][j] = 2;
-            i = i + 2;
-
-            acakTemp = [];
-
-            let nextPos = {
-              "i": i,
-              "j": j
-            };
-            list.push(nextPos);
-          }
-          break;
-        case 4:
-          if (j - 2 > this.min && matrik[i][j - 2] != 2) {
-            matrik[i][j - 2] = 2;
-            matrik[i][j - 1] = 2;
-            j = j - 2;
-
-            acakTemp = [];
-
-            let nextPos = {
-              "i": i,
-              "j": j
-            };
-            list.push(nextPos);
-          }
-          break;
+      if (cell.neighborIndex.length == 0) {
+        cell = list.pop();
       }
-      if (acakTemp.length == 4) {
-        let newPos = list.pop();
-        i = newPos.i;
-        j = newPos.j;
-        acakTemp = [];
-      }
-
     }
-
-    return matrik;
+    return arrayMaze;
   }
 }
