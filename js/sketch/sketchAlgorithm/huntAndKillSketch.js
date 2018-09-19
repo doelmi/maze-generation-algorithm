@@ -1,4 +1,4 @@
-let n = 20;
+let n = 25;
 let length = n * 2 + 1;
 let w, h;
 let grid;
@@ -7,6 +7,21 @@ let rooms;
 let startTime, endTime;
 let currentCell;
 let counter = 0;
+let frameRate1 = [];
+
+function sumArray(array){
+  let total = 0;
+  for (var i = 0; i < array.length; i++) {
+    total+=array[i];
+  }
+  return total;
+}
+
+function avgArray(array){
+  let value = sumArray(array);
+  let avg = value/array.length;
+  return avg;
+}
 
 function hunting(counter, rooms) {
   let cell = rooms[counter];
@@ -50,6 +65,8 @@ function setup() {
 
 function draw() {
   // frameRate(5)
+  frameRate1.push(frameRate());
+
   background(0, 123, 255, 100);
   translate(-width / 2, -height / 2, 0);
   for (let cell of grid) {
@@ -88,6 +105,9 @@ function draw() {
   } else {
     noLoop();
     endTime = millis();
-    console.log(endTime - startTime);
+    console.log("waktu eksekusi : ", endTime - startTime);
+    let maze = theGrid.arrayMazeToMatrix(grid);
+    console.log(theGrid.numberOfIntersection(maze));
+    console.log("avg frameRate : ",avgArray(frameRate1));
   }
 }

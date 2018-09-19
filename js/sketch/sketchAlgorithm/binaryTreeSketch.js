@@ -1,4 +1,4 @@
-let n = 15;
+let n = 25;
 let length = n * 2 + 1;
 let w, h;
 let grid;
@@ -7,6 +7,21 @@ let rooms;
 let current;
 let counter = 0;
 let startTime, endTime;
+let frameRate1 = [];
+
+function sumArray(array){
+  let total = 0;
+  for (var i = 0; i < array.length; i++) {
+    total+=array[i];
+  }
+  return total;
+}
+
+function avgArray(array){
+  let value = sumArray(array);
+  let avg = value/array.length;
+  return avg;
+}
 
 function setup() {
   createCanvas(500, 500, WEBGL);
@@ -22,6 +37,8 @@ function setup() {
 
 function draw() {
   // frameRate(1)
+  frameRate1.push(frameRate());
+
   background(0, 123, 255, 100);
   translate(-width / 2, -height / 2, 0);
   for (let cell of grid) {
@@ -49,6 +66,10 @@ function draw() {
   } else {
     noLoop();
     endTime = millis();
-    console.log(endTime - startTime);
+    console.log("waktu eksekusi : ", endTime - startTime);
+
+    let maze = theGrid.arrayMazeToMatrix(grid);
+    console.log(theGrid.numberOfIntersection(maze));
+    console.log("avg frameRate : ",avgArray(frameRate1));
   }
 }
